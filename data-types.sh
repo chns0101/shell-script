@@ -12,3 +12,15 @@ echo "first movie is: ${MOVIES[0]}"
 #@ is the symbol to print everything
 
 echo "movies list : ${MOVIES[@]}"
+
+
+echo "addition of 2 numbers"
+
+#Arithemetic operaters +,-,*,%
+
+NO1=$1
+NO2=$2
+
+SUM=$(($NO1+$NO2))
+
+echo "total of $NO1 and $NO2 is :$SUM"
