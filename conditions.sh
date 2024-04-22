@@ -18,7 +18,7 @@ fi
 
 SUM=$(($NO1+$NO2))
 
-if [ $NO1 -gt 0 && $NO2 -gt 0]
+if [ $NO1 -gt 0 ]
 then
     echo "total of $NO1 and $NO2 is :$SUM"
 else
