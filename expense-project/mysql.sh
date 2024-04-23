@@ -10,6 +10,9 @@ G="\e[32m]"
 Y="\e[33m]"
 N="\e[0m]"
 
+echo "please enter DB password"
+read -s mysql_root_password
+
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -39,8 +42,22 @@ VALIDATE $? "Enabling mysql-server"
 systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Starting mysql-server"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
-VALIDATE $? "setting up root password"
+#mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+#VALIDATE $? "setting up root password"
+
+#below code will be useful for idempotent nature
+
+mysql -h db.daws78.online -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
+if [ $? -ne 0 ]
+then
+    mysql_secure_installation --set-root-pass ${mysql_root_password}
+    VALIDATE $? "MySQL root password setup"
+else
+    echo -e "MySQL Root password is already setup... $Y SKIPPING $N"
+fi
+
+
+
 
 #create instance
 #login into mysql instance

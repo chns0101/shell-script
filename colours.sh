@@ -11,7 +11,7 @@ N="\e[0m]"
 
 echo "Script started executing at :$TIMESTAMP"
 
-VALIDAE(){
+VALIDATE(){
     if [ $1 -ne 0 ]
     then
         echo -e "$2....$R FAILURE $N"
@@ -36,4 +36,4 @@ dnf install git -y &>> $LOGFILE
 VALIDATE $? "Installing git"
 
 dnf install dockerr -y &>> $LOGFILE
-VALIDAE $? "Installing docker"
+VALIDATE $? "Installing docker"
