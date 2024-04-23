@@ -8,7 +8,7 @@ NO1=$1
 NO2=$2
 NO3=$3
 
-#gt greater than ,lt lesser than,eq equal, nq not equal to
+#gt greater than ,lt lesser than, ne not equal to, ge greater equal to,le lessthan equal to
 if [ $NO3 -gt 10 ]
 then
     echo "given number $NO3 is greater than 10"
