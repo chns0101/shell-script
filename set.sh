@@ -8,6 +8,7 @@ failure(){
 
 trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 
+# failure is a method name you can use any user defined funtion
 i=1
 
 if [ $j -ne 0 ]
