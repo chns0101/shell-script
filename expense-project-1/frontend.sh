@@ -1,14 +1,8 @@
 #!/bin/bash
 
-USERID=$(id -u)
-TIMESTAMP=$(date +%F-%H-%M-%S)
-SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-LOGFILE=/tmp/$SCRIPT_NAME-$TIMESTAMP.log
+source ./common.sh
 
-R="\e[31m]"
-G="\e[32m]"
-Y="\e[33m]"
-N="\e[0m]"
+check_root_user
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -19,15 +13,6 @@ VALIDATE(){
         echo -e "$2...$G SUCCESS $N"
     fi
 }
-
-
-if [ $USERID -ne 0 ]
-then    
-    echo "please run this with root access"
-    exit 1 #manually exit if error comes
-else
-    echo "you are super user"
-fi
 
 dnf install nginx -y &>>$LOGFILE
 VALIDATE $? "Installing nginx"
@@ -49,7 +34,7 @@ cd /usr/share/nginx/html &>>$LOGFILE
 unzip /tmp/frontend.zip &>>$LOGFILE
 VALIDATE $? "Extracting frontend code"
 
-cp /home/ec2-user/expense-shell/expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
+cp /home/ec2-user/shell-script/expense-project-1/expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
 VALIDATE $? "Copied expense conf"
 
 systemctl restart nginx &>>$LOGFILE
