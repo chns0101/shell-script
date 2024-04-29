@@ -3,6 +3,10 @@
 echo "please enter DB password"
 read -s mysql_root_password
 
+echo "successfully entered root password"
+
+echo "starting process"
+
 dnf module disable nodejs -y &>>$LOGFILE
 VALIDATE $? "Disabling default nodejs"
 
@@ -52,8 +56,8 @@ VALIDATE $? "Installing nodejs dependencies"
 
 #absolute path of backend service is /home/ec2-user/backend.service
 
-cp /home/ec2-user/expense-shell/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
-#cp /home/ec2-user/shell-script/expense-project/backend.service /etc/systemd/system/backend.service
+cp /home/ec2-user/shell-script/expense-project-1/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
+
 VALIDATE $? "Copied backend service"
 
 systemctl daemon-reload &>>$LOGFILE
@@ -69,7 +73,7 @@ dnf install mysql -y &>>$LOGFILE
 VALIDATE $? "Installing mysql client"
 
 
-mysql -h db.daws78s.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+mysql -h 172.31.22.56 -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
 VALIDATE $? "Schema loading"
 
 systemctl restart backend &>>$LOGFILE
